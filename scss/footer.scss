@@ -1,0 +1,119 @@
+//====================================================================================================
+.footer {
+    background-color: $black;
+    padding: 120px 0;
+
+    
+    @media (max-width:$mobile) {
+        padding: 64px 0;
+    }
+
+    // .footer__title
+
+    &__title {
+        color: #fff;
+        margin-bottom: rem(120);
+        font-size: rem(32);
+
+
+        @media (max-width:$mobile) {
+            margin-bottom: rem(64);
+        }
+
+        @media (max-width:$mobileSmall) {
+            margin-bottom: rem(48);
+        }
+    }
+
+    // .footer__bottom
+
+    &__bottom {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 120px;
+        border-top: 1px solid #4F5A6A;
+        flex-wrap: wrap;
+        gap: 32px;
+
+
+        @media (max-width:$mobile) {
+            padding-top: 64px;
+        }
+
+        @media (max-width:$mobileSmall) {
+            padding-top: 48px;
+        }
+    }
+
+    // .footer__copy
+
+    &__copy {
+        color: #fff;
+        font-size: rem(16);
+
+        @media (max-width: em(929)) {
+            order: 2;
+        }
+    }
+
+    // .footer__list
+
+    &__list {
+        flex: 0 0 495px;
+        display: flex;
+        gap: 32px;
+
+        @media (max-width: em(929)) {
+            flex-wrap: wrap;
+        }
+    }
+
+    // .footer__item
+
+    &__item {
+        @media (max-width: em(929)) {
+            flex-basis: 100%;
+        }
+    }
+
+    // .footer__link
+
+    &__link {
+        font-size: rem(16);
+        color: $blue;
+    }
+}
+
+.more-projects {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: rem(120);
+    row-gap: 48px;
+
+    // .more-projects__item
+
+    &__item {
+        flex-basis: 50%;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        min-width: 330px;
+    }
+
+    // .more-projects__name
+
+    &__name {
+        margin-bottom: rem(16);
+        color: #fff;
+    }
+
+    @media (max-width:$mobile) {
+        margin-bottom: rem(64);
+    }
+
+    @media (max-width:$mobileSmall) {
+        margin-bottom: rem(48);
+    }
+}
+
+//====================================================================================================
