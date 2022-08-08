@@ -13,6 +13,70 @@
             document.documentElement.classList.add(className);
         }));
     }
+    let isMobile = {
+        Android: function() {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function() {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function() {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function() {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function() {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function() {
+            return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
+        }
+    };
+    function addTouchClass() {
+        if (isMobile.any()) document.documentElement.classList.add("touch");
+    }
+    function getHash() {
+        if (location.hash) return location.hash.replace("#", "");
+    }
+    let bodyLockStatus = true;
+    let bodyLockToggle = (delay = 500) => {
+        if (document.documentElement.classList.contains("lock")) bodyUnlock(delay); else bodyLock(delay);
+    };
+    let bodyUnlock = (delay = 500) => {
+        let body = document.querySelector("body");
+        if (bodyLockStatus) {
+            let lock_padding = document.querySelectorAll("[data-lp]");
+            setTimeout((() => {
+                for (let index = 0; index < lock_padding.length; index++) {
+                    const el = lock_padding[index];
+                    el.style.paddingRight = "0px";
+                }
+                body.style.paddingRight = "0px";
+                document.documentElement.classList.remove("lock");
+            }), delay);
+            bodyLockStatus = false;
+            setTimeout((function() {
+                bodyLockStatus = true;
+            }), delay);
+        }
+    };
+    let bodyLock = (delay = 500) => {
+        let body = document.querySelector("body");
+        if (bodyLockStatus) {
+            let lock_padding = document.querySelectorAll("[data-lp]");
+            for (let index = 0; index < lock_padding.length; index++) {
+                const el = lock_padding[index];
+                el.style.paddingRight = window.innerWidth - document.querySelector(".wrapper").offsetWidth + "px";
+            }
+            body.style.paddingRight = window.innerWidth - document.querySelector(".wrapper").offsetWidth + "px";
+            document.documentElement.classList.add("lock");
+            bodyLockStatus = false;
+            setTimeout((function() {
+                bodyLockStatus = true;
+            }), delay);
+        }
+    };
     function menuInit() {
         if (document.querySelector(".icon-menu")) document.addEventListener("click", (function(e) {
             if (bodyLockStatus && e.target.closest(".icon-menu")) {
@@ -24,9 +88,6 @@
     function menuClose() {
         bodyUnlock();
         document.documentElement.classList.remove("menu-open");
-    }
-    function getHash() {
-        if (location.hash) return location.hash.replace("#", "");
     }
     function functions_FLS(message) {
         setTimeout((() => {
@@ -2477,7 +2538,7 @@
         $el.addClass([ ...classNames ].join(" "));
         swiper.emitContainerClasses();
     }
-    function removeClasses() {
+    function removeClasses_removeClasses() {
         const swiper = this;
         const {$el, classNames} = swiper;
         $el.removeClass(classNames.join(" "));
@@ -2485,7 +2546,7 @@
     }
     const classes = {
         addClasses,
-        removeClasses
+        removeClasses: removeClasses_removeClasses
     };
     function loadImage(imageEl, src, srcset, sizes, checkForComplete, callback) {
         const window = ssr_window_esm_getWindow();
@@ -3689,6 +3750,7 @@
     }
     window["FLS"] = true;
     isWebp();
+    addTouchClass();
     menuInit();
     pageNavigation();
     headerScroll();
